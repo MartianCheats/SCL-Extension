@@ -2,10 +2,9 @@
 #include<iostream>
 #include<Windows.h>
 
-using namespace std;
-
 HWND hwnd;
 DWORD procID;
+DWORD vacID;
 HANDLE handle;
 
 std::string print(std::string text)
@@ -28,7 +27,7 @@ void StartProcess(const char* pPath)
 
 bool AttachToProcess(const char* wName)
 {
-	hwnd = FindWindowA(NULL, wName); 
+	hwnd = FindWindowA(NULL, wName);
 	GetWindowThreadProcessId(hwnd, &procID);
 	handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procID);
 	return true;
@@ -52,11 +51,10 @@ void Detach()
 
 void AC_PROOF_MODE(std::string mode)
 {
-	DWORD vacID;
 	HWND vacProc = FindWindowA(NULL, "VAC.exe");
-	if(mode == "vac")
+	if (mode == "vac")
 	{
-		HANDLE vacHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, vacProc);
+		HANDLE vacHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, vacID);
 		GetWindowThreadProcessId(vacProc, &vacID);
 	}
 	else
